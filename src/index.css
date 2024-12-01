@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #3b82f6;
+    --color-secondary: #6b7280;
+    --color-accent: #f59e0b;
+  }
+
+  .dark {
+    --color-primary: #60a5fa;
+    --color-secondary: #9ca3af;
+    --color-accent: #fbbf24;
+  }
+
+  body {
+    @apply text-gray-900 dark:text-gray-100 antialiased bg-gray-50 dark:bg-gray-900;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2.5 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 min-h-[2.5rem];
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg dark:from-blue-500 dark:to-blue-600;
+  }
+  
+  .btn-secondary {
+    @apply bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 shadow-sm hover:shadow;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-all duration-200 hover:shadow-md;
+  }
+
+  .input {
+    @apply mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 shadow-sm 
+           focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 
+           transition-colors duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100;
+  }
+}

@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isUserAdmin() {
+      return isAuthenticated() && getUserData().role == 'admin';
+    }
+
+    function belongsToOrganization(orgId) {
+      return isAuthenticated() && getUserData().organizationId == orgId;
+    }
+
+    // Organizations collection
+    match /organizations/{organizationId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+      
+      // Banners subcollection
+      match /banners/{bannerId} {
+        allow read: if true;
+        allow write: if isAuthenticated();
+      }
+
+      // Notifications subcollection
+      match /notifications/{notificationId} {
+        allow read: if true;
+        allow write: if isAuthenticated();
+      }
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Posters collection
+    match /posters/{posterId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Publications collection
+    match /publications/{publicationId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Stands collection
+    match /stands/{standId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Other collections
+    match /{collection}/{docId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+  }
+}
